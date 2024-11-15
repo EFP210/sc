@@ -1,0 +1,62 @@
+.container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: auto;
+}
+
+.title {
+    color: #4A148C; /* Morado de la barra de navegación */
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.inputGroup {
+    margin-bottom: 15px;
+}
+
+.label {
+    font-weight: bold;
+    color: #333;
+}
+
+.input,
+.textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+    transition: background-color 0.3s, opacity 0.3s;
+}
+
+.button {
+    background-color: #4A148C; /* Morado de la barra de navegación */
+    color: #fff;
+    border: none;
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #6a1b9a;
+}
+
+/* Estilo para el campo desactivado */
+.disabled {
+    background-color: #f0f0f0;
+    opacity: 0.6;
+    cursor: not-allowed;
+}

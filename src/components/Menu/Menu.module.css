@@ -1,0 +1,19 @@
+/* src/components/Menu/Menu.module.css */
+.menu {
+    display: flex;
+    gap: 20px;
+    padding: 10px;
+    background-color: #4A148C;
+    color: white;
+    justify-content: center;
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.menu a:hover {
+    text-decoration: underline;
+}
