@@ -20,7 +20,6 @@
     "twilio": "^5.3.5"
   },
   "devDependencies": {
-    "@netlify/next": "^1.4.9",
     "@types/json2csv": "^5.0.7",
     "@types/node": "^20",
     "@types/papaparse": "^5.3.15",
