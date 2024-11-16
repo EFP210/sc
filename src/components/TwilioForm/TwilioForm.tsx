@@ -4,7 +4,7 @@ import Papa from 'papaparse';
 import styles from './TwilioForm.module.css';
 
 interface CSVRow {
-    Telefonos?: string; // Define que la columna `Telefonos` es opcional
+    Telefonos?: string;
 }
 
 const TwilioForm = () => {
@@ -50,15 +50,9 @@ const TwilioForm = () => {
     
         const numbersArray = numbers.split(',').map((num) => num.trim());
         const API_BASE_URL = process.env.NODE_ENV === 'production'
-            ? process.env.NEXT_PUBLIC_API_URL // Asegúrate de configurar esta variable en Netlify
+            ? process.env.NEXT_PUBLIC_API_URL
             : 'http://localhost:3000';
-    
-        // Log de variables de entorno críticas
-        console.log('API_BASE_URL:', API_BASE_URL);
-        console.log('Variables de entorno necesarias:');
-        console.log('TWILIO_MESSAGING_SERVICE_SID:', process.env.TWILIO_MESSAGING_SERVICE_SID || 'No definida');
-        console.log('TWILIO_PHONE_NUMBER:', process.env.TWILIO_PHONE_NUMBER || 'No definida');
-        console.log('TWILIO_AUTH_TOKEN:', process.env.TWILIO_AUTH_TOKEN || 'No definida');
+
     
         try {
             const response = await fetch(`${API_BASE_URL}/api/twilio/sendMessages`, {
@@ -79,7 +73,6 @@ const TwilioForm = () => {
             }
         } catch (error) {
             console.error('Error al enviar mensajes:', error);
-            // Mostrar mensaje adicional en caso de fallo
             alert(
                 'Ocurrió un error al intentar enviar los mensajes. Revisa los logs de consola para más detalles.'
             );
