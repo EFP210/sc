@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "dev": "next dev",
     "build": "next build",
-    "export": "next export",
-    "netlify": "netlify dev"
+    "start": "next start",
+    "clean": "rimraf .next"
   },
   "dependencies": {
     "@netlify/plugin-nextjs": "^5.8.1",
