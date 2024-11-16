@@ -50,23 +50,6 @@ const TemplateSelector: React.FC<TemplateSelectorProps> = ({
     fetchTemplates();
   }, []);
 
-  const handleVariableChange = (key: string, value: string) => {
-    const updatedVariables = { ...variables, [key]: value };
-    setVariables(updatedVariables);
-
-    // Generar vista previa dinámica
-    const selectedTemplate = plantillas.find((template) => template.sid === selectedTemplateId);
-    if (selectedTemplate) {
-      const templateBody = getTemplateBody(selectedTemplate);
-      if (templateBody) {
-        const updatedBody = templateBody.replace(
-          /\{\{(\d+)\}\}/g,
-          (_, match) => updatedVariables[match] || `{{${match}}}`
-        );
-        onTemplateEdit(updatedBody);
-      }
-    }
-  };
 
   const getTemplateBody = (template: Template): string | null => {
     const types = template.types || {};

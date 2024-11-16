@@ -34,47 +34,49 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const usersData = await Promise.all(
         uids.map(async (uid: string) => {
           console.log(`[LOG]: Procesando usuario con UID: ${uid}`);
-
+      
           // Consultar el documento del entrenamiento en Firestore
-          const entrenamientoRef = firestore.doc(`entrenamientos/entrenatusupercerebro/registro_entrenamiento/${uid}`);
+          const entrenamientoRef = firestore.doc(
+            `entrenamientos/entrenatusupercerebro/registro_entrenamiento/${uid}`
+          );
           console.log(`[LOG]: Consultando datos en ruta: entrenamientos/entrenatusupercerebro/registro_entrenamiento/${uid}`);
-
+      
           const entrenamientoSnapshot = await entrenamientoRef.get();
           const entrenamientoData = entrenamientoSnapshot.exists ? entrenamientoSnapshot.data() : null;
-
+      
           if (!entrenamientoData) {
             console.warn(`[WARN]: Entrenamiento no encontrado para UID: ${uid}`);
             return {
               UID: uid,
-              Correo: 'No encontrado',
-              Registrado: 'No',
-              Entrenamiento: 'No',
-              'Primer Login': 'N.A',
-              'Ingresado Entrenamiento': 'N.A',
-              'Sesiones Completadas': 'N.A',
-              'Actividades Completadas': 'N.A',
-              'Entrenamiento Completado': 'N.A',
-              'Inicio Entrenamiento': 'N.A',
-              'Fecha Última Sesión': 'N.A',
+              Nombre: 'No encontrado',
+              'Teléfono Completo': 'No disponible',
+              'Completado Entrenamiento': 'No',
+              'Completado Sesión': 'No',
+              'Fecha Inicio Entrenamiento': 'N.A',
+              'Última Fecha de Sesión': 'N.A',
+              'Orden de Sesión': 'N.A',
             };
           }
-
+      
           console.log(`[LOG]: Datos encontrados para UID ${uid}: ${JSON.stringify(entrenamientoData)}`);
-
+      
           return {
             UID: uid,
-            Correo: entrenamientoData?.email || 'No encontrado',
-            Registrado: entrenamientoData?.registrado ? 'Sí' : 'No Registrado',
-            Entrenamiento: entrenamientoData ? 'Sí' : 'No',
-            'Primer Login': entrenamientoData?.primerLogin ? 'Sí' : 'No',
-            'Ingresado Entrenamiento': entrenamientoData?.ingresadoEntrenamiento ? 'Sí' : 'No',
-            'Sesiones Completadas': entrenamientoData?.sesionesCompletadas ?? 'N.A',
-            'Actividades Completadas': entrenamientoData?.actividadesCompletadas ?? 'N.A',
-            'Entrenamiento Completado': entrenamientoData?.completadoEntrenamiento ? 'Sí' : 'No',
-            'Inicio Entrenamiento': entrenamientoData?.fechaInicio?.toDate().toLocaleDateString() ?? 'N.A',
-            'Fecha Última Sesión': entrenamientoData?.fechaUltimaSesion?.toDate().toLocaleDateString() ?? 'N.A',
+            Nombre: entrenamientoData.nombre || 'No encontrado',
+            'Teléfono Completo': entrenamientoData.telefonoCompleto || 'No disponible',
+            'Completado Entrenamiento': entrenamientoData.completadoEntrenamiento ? 'Sí' : 'No',
+            'Completado Sesión': entrenamientoData.completadoSesion ? 'Sí' : 'No',
+            'Fecha Inicio Entrenamiento': entrenamientoData.fechaInicio
+              ? new Date(entrenamientoData.fechaInicio._seconds * 1000).toLocaleDateString()
+              : 'N.A',
+            'Última Fecha de Sesión': entrenamientoData.fechaSesion
+              ? new Date(entrenamientoData.fechaSesion._seconds * 1000).toLocaleDateString()
+              : 'N.A',
+            'Orden de Sesión': entrenamientoData.ordenSesion ?? 'N.A',
           };
-        }));
+        })
+      );
+      
 
 
       console.log(`[LOG]: Datos de usuarios procesados: ${JSON.stringify(usersData)}`);

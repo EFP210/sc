@@ -24,6 +24,7 @@ export default function ReportUploader() {
         const data = await response.json();
         setTrainings(data.trainings);
       } catch (error) {
+        console.log(error)
         setError("No se pudieron cargar los entrenamientos. Intenta nuevamente.");
       }
     };
