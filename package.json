@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "export": "next export",
+    "netlify": "netlify dev"
   },
   "dependencies": {
+    "@netlify/next": "^1.4.9",
     "@netlify/plugin-nextjs": "^5.8.1",
+    "clean": "^4.0.2",
     "firebase": "^11.0.2",
     "firebase-admin": "^13.0.0",
     "json2csv": "^6.0.0-alpha.2",
@@ -29,6 +30,7 @@
     "eslint": "^8",
     "eslint-config-next": "15.0.3",
     "postcss": "^8",
+    "rimraf": "^6.0.1",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }

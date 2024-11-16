@@ -3,8 +3,7 @@ import type { Configuration } from 'webpack';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true, // Activa el modo estricto de React
-  swcMinify: true,       // Utiliza SWC para minificación más rápida
-  output: 'standalone',  // Asegura la compatibilidad con entornos serverless
+  output: 'standalone',
 
   // Configuración personalizada de Webpack
   webpack: (config: Configuration, { isServer }: { isServer: boolean }) => {
@@ -23,6 +22,10 @@ const nextConfig = {
       };
     }
     return config;
+  },
+
+  experimental: {
+    turbo: false, // Desactiva Turbopack
   },
 
   // Variables de entorno
