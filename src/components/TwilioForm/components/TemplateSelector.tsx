@@ -29,7 +29,6 @@ const TemplateSelector: React.FC<TemplateSelectorProps> = ({
   const [templates, setTemplates] = useState<Template[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  // Configuración de la base de URL según el entorno
   const API_BASE_URL =
     process.env.NODE_ENV === 'production'
       ? process.env.NEXT_PUBLIC_API_URL // Variable de entorno para producción
