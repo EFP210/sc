@@ -14,27 +14,25 @@ export default function ReportUploader() {
   const [error, setError] = useState<string | null>(null);
   const [trainings, setTrainings] = useState<Training[]>([]);
   const [selectedTraining, setSelectedTraining] = useState<string | null>(null);
+  const API_BASE_URL =
+  process.env.NODE_ENV === "production"
+    ? process.env.NEXT_PUBLIC_API_URL
+    : "http://localhost:3000";
 
   // Fetch trainings from backend
   useEffect(() => {
     const fetchTrainings = async () => {
       try {
-        const API_BASE_URL =
-          process.env.NODE_ENV === "production"
-            ? process.env.NEXT_PUBLIC_API_URL
-            : "http://localhost:3000";
-
-        const response = await fetch(`${API_BASE_URL}/api/training`);
-        if (!response.ok) throw new Error("Error al cargar los entrenamientos");
-        const data = await response.json();
-        setTrainings(data.trainings);
+          const response = await fetch(`${API_BASE_URL}/api/training`);
+          if (!response.ok) throw new Error('Error al cargar los entrenamientos');
+          const data = await response.json();
+          setTrainings(data.trainings);
       } catch (error) {
-        console.error(error);
-        setError(
-          "No se pudieron cargar los entrenamientos. Intenta nuevamente."
-        );
+          console.log(error);
+          setError('No se pudieron cargar los entrenamientos. Intenta nuevamente.');
       }
-    };
+  };
+  
     fetchTrainings();
   }, []);
 
@@ -63,10 +61,7 @@ export default function ReportUploader() {
       skipEmptyLines: true,
       complete: async (results) => {
         const uids = results.data.map((row) => row.UID?.trim());
-        const API_BASE_URL =
-          process.env.NODE_ENV === "production"
-            ? process.env.API_BASE_URL
-            : "http://localhost:3000";
+
 
         try {
           const response = await fetch(`${API_BASE_URL}/api/report/generate`, {
