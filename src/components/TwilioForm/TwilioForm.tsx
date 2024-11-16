@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import TemplateSelector from './components/TemplateSelector';
-import MessagePreview from './components/MessagePreview';
 import Papa from 'papaparse';
 import styles from './TwilioForm.module.css';
 

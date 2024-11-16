@@ -14,7 +14,6 @@ export default function ReportUploader() {
   const [error, setError] = useState<string | null>(null);
   const [trainings, setTrainings] = useState<Training[]>([]);
   const [selectedTraining, setSelectedTraining] = useState<string | null>(null);
-  const [reportData, setReportData] = useState<any[]>([]);
 
   // Fetch trainings from backend
   useEffect(() => {
@@ -75,7 +74,6 @@ export default function ReportUploader() {
           link.click();
           document.body.removeChild(link);
 
-          setReportData([]);
         } catch (error) {
           console.error(error);
           setError("Hubo un problema al generar el reporte.");

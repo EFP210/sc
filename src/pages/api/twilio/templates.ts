@@ -7,7 +7,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const templates = await obtenerPlantillasTwilio();
       res.status(200).json(templates);
     } catch (error) {
-      res.status(500).json({ error: 'Error al obtener plantillas de Twilio' });
+      res.status(500).json({ error: 'Error al obtener plantillas de Twilio', err: error},);
     }
   } else {
     res.setHeader('Allow', ['GET']);

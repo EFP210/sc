@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { auth, firestore } from '@/config/firebase';
+import { firestore } from '@/config/firebase';
 import { Parser } from 'json2csv';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

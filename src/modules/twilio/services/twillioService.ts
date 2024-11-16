@@ -18,7 +18,7 @@ export async function enviarMensajesTwilio(numbers: string[], templateId: string
         to: `whatsapp:${number}`,
       });
     } catch (error) {
-      console.error(`Error al enviar mensaje a ${number}:`,);
+      console.error(`Error al enviar mensaje a ${number}:`, error);
       return null;
     }
   });

@@ -68,27 +68,6 @@ const TemplateSelector: React.FC<TemplateSelectorProps> = ({
     }
   };
 
-  const renderVariableInputs = (body: string) => {
-    const matches = body.match(/\{\{\d+\}\}/g); // Buscar todas las variables dinámicas
-    if (!matches) return <p>No hay variables para esta plantilla.</p>;
-
-    const uniqueVariables = Array.from(new Set(matches));
-
-    return uniqueVariables.map((variable, index) => {
-      const key = variable.replace('{{', '').replace('}}', ''); // Extraer el número
-      return (
-        <div key={index} className={styles.variableInput}>
-          <label>{`Valor para ${variable}:`}</label>
-          <input
-            type="text"
-            value={variables[key] || ''}
-            onChange={(e) => handleVariableChange(key, e.target.value)}
-          />
-        </div>
-      );
-    });
-  };
-
   const getTemplateBody = (template: Template): string | null => {
     const types = template.types || {};
 
