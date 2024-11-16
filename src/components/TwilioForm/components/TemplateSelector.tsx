@@ -31,10 +31,9 @@ const TemplateSelector: React.FC<TemplateSelectorProps> = ({
 
   const API_BASE_URL =
     process.env.NODE_ENV === 'production'
-      ? process.env.NEXT_PUBLIC_API_URL // Variable de entorno para producción
-      : 'http://localhost:3000'; // Base de URL para desarrollo
+      ? process.env.NEXT_PUBLIC_API_URL
+      : 'http://localhost:3000';
 
-  // Fetch templates desde el backend
   useEffect(() => {
     const fetchTemplates = async () => {
       try {
