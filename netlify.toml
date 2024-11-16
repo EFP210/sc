@@ -1,8 +1,19 @@
 [build]
   command = "npm run build"
   publish = ".next"
+  functions = "./netlify/functions"
 
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Redirección para funciones API
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
+  status = 200
+
+# Redirección global para todas las demás rutas
+[[redirects]]
+  from = "/*"
+  to = "/"
   status = 200

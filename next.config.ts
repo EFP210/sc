@@ -1,6 +1,12 @@
 import type { Configuration } from 'webpack';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true, // Activa el modo estricto de React
+  swcMinify: true,       // Utiliza SWC para minificación más rápida
+  output: 'standalone',  // Asegura la compatibilidad con entornos serverless
+
+  // Configuración personalizada de Webpack
   webpack: (config: Configuration, { isServer }: { isServer: boolean }) => {
     if (!isServer) {
       config.resolve = {
@@ -14,10 +20,12 @@ const nextConfig = {
           dgram: false,
           process: false,
         },
-      };  
+      };
     }
     return config;
   },
+
+  // Variables de entorno
   env: {
     TWILIO_ACCOUNT_SID: process.env.TWILIO_ACCOUNT_SID,
     TWILIO_AUTH_TOKEN: process.env.TWILIO_AUTH_TOKEN,
@@ -47,6 +55,7 @@ const nextConfig = {
     EPAYCO_URL_CONFIRMATION_DEV: process.env.EPAYCO_URL_CONFIRMATION_DEV,
     FIREBASE_STORAGE_URL: process.env.FIREBASE_STORAGE_URL,
     FIREBASE_STORAGE_URL_DEV: process.env.FIREBASE_STORAGE_URL_DEV,
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL, // Asegúrate de definir esta variable
   },
 };
 
