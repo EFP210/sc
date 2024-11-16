@@ -8,7 +8,6 @@
     "netlify": "netlify dev"
   },
   "dependencies": {
-    "@netlify/next": "^1.4.9",
     "@netlify/plugin-nextjs": "^5.8.1",
     "clean": "^4.0.2",
     "firebase": "^11.0.2",
