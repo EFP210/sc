@@ -3,7 +3,6 @@ import Twilio from 'twilio/lib/rest/Twilio';
 // Configuración del cliente de Twilio
 const client = new Twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
-// Función para enviar mensajes con una plantilla
 export async function enviarMensajesTwilio(numbers: string[], templateId: string) {
   if (!process.env.TWILIO_MESSAGING_SERVICE_SID || !process.env.TWILIO_PHONE_NUMBER) {
     throw new Error("Las variables de entorno necesarias no están definidas.");
