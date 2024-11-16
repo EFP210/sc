@@ -7,8 +7,7 @@ const Menu = () => {
         <nav className={styles.menu}>
             <Link href="/">Inicio</Link>
             <Link href="/twilio">Mensajes Masivos</Link>
-            <Link href="/otra-funcionalidad">Otra Funcionalidad</Link>
-            <Link href="/reporte">Otra Funcionalidad</Link>
+            <Link href="/report">Reporte</Link>
         </nav>
     );
 };

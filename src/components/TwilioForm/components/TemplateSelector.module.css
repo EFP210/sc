@@ -1,0 +1,52 @@
+.templateContainer {
+    max-height: 400px; /* Altura máxima */
+    overflow-y: auto;  /* Scroll vertical */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    margin: 20px 0;
+}
+
+.templateCard {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.templateCard:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f2f2f2;
+}
+
+.selected {
+    border-color: #007bff;
+    background: #e7f3ff;
+}
+
+.previewSection {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fefefe;
+}
+
+.previewBody {
+    margin-top: 10px;
+    padding: 10px;
+    background: #f6f6f6;
+    border-radius: 6px;
+    font-style: italic;
+    color: #555;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.variableInput {
+    margin-top: 10px;
+}
