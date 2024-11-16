@@ -6,7 +6,7 @@ interface Template {
   friendlyName: string;
   dateCreated: string;
   language: string;
-  types: {
+  types?: { // Marcar `types` como opcional
     'twilio/text'?: {
       body: string | null;
     };
@@ -102,7 +102,7 @@ const TemplateSelector: React.FC<TemplateSelectorProps> = ({
             <strong>Fecha de Creación:</strong>{' '}
             {new Date(selectedTemplate.dateCreated).toLocaleDateString()}
           </p>
-          {selectedTemplate.types['twilio/text']?.body && (
+          {selectedTemplate.types?.['twilio/text']?.body && (
             <p>
               <strong>Cuerpo del Mensaje:</strong> {selectedTemplate.types['twilio/text']?.body}
             </p>
