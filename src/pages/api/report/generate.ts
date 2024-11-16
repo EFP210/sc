@@ -3,6 +3,16 @@ import { firestore } from '@/config/firebase';
 import { Parser } from 'json2csv';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  // Configuración de CORS
+  res.setHeader('Access-Control-Allow-Origin', '*'); // Cambia '*' por tu dominio si necesitas restringir el acceso
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  // Manejar solicitudes preflight
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   console.log(`[LOG]: Nueva solicitud ${req.method} en /api/report/generate`);
 
   if (req.method === 'POST') {
@@ -35,7 +45,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         uids.map(async (uid: string) => {
           console.log(`[LOG]: Procesando usuario con UID: ${uid}`);
       
-          // Consultar el documento del entrenamiento en Firestore
           const entrenamientoRef = firestore.doc(
             `entrenamientos/entrenatusupercerebro/registro_entrenamiento/${uid}`
           );
@@ -77,8 +86,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         })
       );
       
-
-
       console.log(`[LOG]: Datos de usuarios procesados: ${JSON.stringify(usersData)}`);
 
       // Convertir datos a CSV usando json2csv
