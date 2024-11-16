@@ -21,13 +21,11 @@ interface Template {
 interface TemplateSelectorProps {
   selectedTemplateId: string;
   setSelectedTemplateId: (id: string) => void;
-  onTemplateEdit: (body: string) => void;
 }
 
 const TemplateSelector: React.FC<TemplateSelectorProps> = ({
   selectedTemplateId,
   setSelectedTemplateId,
-  onTemplateEdit,
 }) => {
   const [plantillas, setPlantillas] = useState<Template[]>([]);
   const [variables, setVariables] = useState<{ [key: string]: string }>({});
@@ -49,28 +47,11 @@ const TemplateSelector: React.FC<TemplateSelectorProps> = ({
 
     fetchTemplates();
   }, []);
-
-
-  const getTemplateBody = (template: Template): string | null => {
-    const types = template.types || {};
-
-    if (types['twilio/text']?.body) {
-        return types['twilio/text'].body;
-    } else if (types['twilio/card']?.title) {
-        return types['twilio/card'].title;
-    }
-
-    return 'No hay cuerpo disponible para esta plantilla.';
-};
-
   
   const selectedTemplate = plantillas.find((template) => template.sid === selectedTemplateId);
 
   useEffect(() => {
     if (selectedTemplate) {
-        const templateBody = getTemplateBody(selectedTemplate);
-        const updatedBody = templateBody?.replace(/\{\{(\d+)\}\}/g, (_, match) => variables[match] || `{{${match}}}`);
-        onTemplateEdit(updatedBody || '');
     }
 }, [selectedTemplate, variables]);
 

@@ -3,11 +3,14 @@ import TemplateSelector from './components/TemplateSelector';
 import Papa from 'papaparse';
 import styles from './TwilioForm.module.css';
 
+interface CSVRow {
+    Telefonos?: string; // Define que la columna `Telefonos` es opcional
+}
+
 const TwilioForm = () => {
     const [selectedTemplateId, setSelectedTemplateId] = useState('');
     const [numbers, setNumbers] = useState('');
     const [error, setError] = useState<string | null>(null);
-    const [messagePreview, setMessagePreview] = useState(''); // Estado para la vista previa del mensaje
 
     const validateInputs = () => {
         if (!selectedTemplateId) {
@@ -26,11 +29,13 @@ const TwilioForm = () => {
         const file = e.target.files?.[0];
         if (!file) return;
 
-        Papa.parse(file, {
+        Papa.parse<CSVRow>(file, {
             header: true,
             complete: (results) => {
-                const phoneNumbers = results.data.map((row: any) => row.Telefonos?.trim()).filter(Boolean);
-                setNumbers(phoneNumbers.join(', ')); // Actualiza el estado de números
+                const phoneNumbers = results.data
+                    .map((row) => row.Telefonos?.trim())
+                    .filter(Boolean);
+                setNumbers(phoneNumbers.join(', '));
             },
             error: (error) => {
                 console.error('Error al procesar el archivo CSV:', error);
@@ -66,41 +71,39 @@ const TwilioForm = () => {
     };
 
     return (
-<div className={styles.container}>
-    <h1 className={styles.title}>Envío de Mensajes Masivos</h1>
-    <form onSubmit={handleSubmit} className={styles.form}>
-        <TemplateSelector
-            selectedTemplateId={selectedTemplateId}
-            setSelectedTemplateId={setSelectedTemplateId}
-            onTemplateEdit={setMessagePreview}
-        />
-        <div className={styles.inputGroup}>
-            <label htmlFor="numbers">Números (separados por coma):</label>
-            <textarea
-                id="numbers"
-                value={numbers}
-                onChange={(e) => setNumbers(e.target.value)}
-                className={styles.textarea}
-                placeholder="Ej: +1234567890, +0987654321"
-            />
+        <div className={styles.container}>
+            <h1 className={styles.title}>Envío de Mensajes Masivos</h1>
+            <form onSubmit={handleSubmit} className={styles.form}>
+                <TemplateSelector
+                    selectedTemplateId={selectedTemplateId}
+                    setSelectedTemplateId={setSelectedTemplateId}
+                />
+                <div className={styles.inputGroup}>
+                    <label htmlFor="numbers">Números (separados por coma):</label>
+                    <textarea
+                        id="numbers"
+                        value={numbers}
+                        onChange={(e) => setNumbers(e.target.value)}
+                        className={styles.textarea}
+                        placeholder="Ej: +1234567890, +0987654321"
+                    />
+                </div>
+                <div className={styles.inputGroup}>
+                    <label htmlFor="fileInput">Cargar números desde CSV:</label>
+                    <input
+                        id="fileInput"
+                        type="file"
+                        accept=".csv"
+                        onChange={handleCSVUpload}
+                        className={styles.fileInput}
+                    />
+                </div>
+                {error && <p className={styles.error}>{error}</p>}
+                <button type="submit" className={styles.button}>
+                    Enviar Mensajes
+                </button>
+            </form>
         </div>
-        <div className={styles.inputGroup}>
-            <label htmlFor="fileInput">Cargar números desde CSV:</label>
-            <input
-                id="fileInput"
-                type="file"
-                accept=".csv"
-                onChange={handleCSVUpload}
-                className={styles.fileInput}
-            />
-        </div>
-        {error && <p className={styles.error}>{error}</p>}
-        <button type="submit" className={styles.button}>
-            Enviar Mensajes
-        </button>
-    </form>
-</div>
-
     );
 };
 
