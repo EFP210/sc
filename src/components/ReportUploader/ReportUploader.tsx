@@ -19,17 +19,25 @@ export default function ReportUploader() {
   useEffect(() => {
     const fetchTrainings = async () => {
       try {
-        const response = await fetch("/api/training");
+        const API_BASE_URL =
+          process.env.NODE_ENV === "production"
+            ? process.env.NEXT_PUBLIC_API_URL
+            : "http://localhost:3000";
+
+        const response = await fetch(`${API_BASE_URL}/api/training`);
         if (!response.ok) throw new Error("Error al cargar los entrenamientos");
         const data = await response.json();
         setTrainings(data.trainings);
       } catch (error) {
-        console.log(error)
-        setError("No se pudieron cargar los entrenamientos. Intenta nuevamente.");
+        console.error(error);
+        setError(
+          "No se pudieron cargar los entrenamientos. Intenta nuevamente."
+        );
       }
     };
     fetchTrainings();
   }, []);
+
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files?.[0]) {
@@ -55,15 +63,22 @@ export default function ReportUploader() {
       skipEmptyLines: true,
       complete: async (results) => {
         const uids = results.data.map((row) => row.UID?.trim());
+        const API_BASE_URL =
+          process.env.NODE_ENV === "production"
+            ? process.env.API_BASE_URL
+            : "http://localhost:3000";
 
         try {
-          const response = await fetch("/api/report/generate", {
+          const response = await fetch(`${API_BASE_URL}/api/report/generate`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ uids, trainingId: selectedTraining }),
           });
 
-          if (!response.ok) throw new Error("Error al generar el reporte");
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Error al generar el reporte");
+          }
 
           const blob = await response.blob();
           const url = window.URL.createObjectURL(blob);
@@ -74,14 +89,20 @@ export default function ReportUploader() {
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
-
-        } catch (error) {
+        } catch (error: unknown) {
           console.error(error);
-          setError("Hubo un problema al generar el reporte.");
+          if (error instanceof Error) {
+            setError(error.message || "Hubo un problema al generar el reporte.");
+          } else {
+            setError("Hubo un problema desconocido.");
+          }
         }
+
+
       },
     });
   };
+
 
   return (
     <div style={{ fontFamily: "Arial, sans-serif", padding: "20px", backgroundColor: "#f5f5f5", minHeight: "100vh" }}>

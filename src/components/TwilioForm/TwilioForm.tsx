@@ -49,9 +49,12 @@ const TwilioForm = () => {
         if (!validateInputs()) return;
 
         const numbersArray = numbers.split(',').map((num) => num.trim());
+        const API_BASE_URL = process.env.NODE_ENV === 'production'
+            ? process.env.NEXT_PUBLIC_API_URL // Asegúrate de configurar esta variable en Netlify
+            : 'http://localhost:3000';
 
         try {
-            const response = await fetch('/api/twilio/sendMessages', {
+            const response = await fetch(`${API_BASE_URL}/api/twilio/sendMessages`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -63,11 +66,15 @@ const TwilioForm = () => {
                 alert('Mensajes enviados con éxito');
                 setNumbers('');
             } else {
-                alert('Error al enviar mensajes');
+                const errorData = await response.json();
+                console.error('Error en la respuesta de la API:', errorData);
+                alert(`Error al enviar mensajes: ${errorData.error || 'Error desconocido'}`);
             }
         } catch (error) {
             console.error('Error al enviar mensajes:', error);
+            alert('Ocurrió un error al intentar enviar los mensajes. Intenta nuevamente.');
         }
+
     };
 
     return (
